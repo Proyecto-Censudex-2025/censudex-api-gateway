@@ -1,10 +1,24 @@
+using censudex_api.src.Services;
+using InventoryService.Grpc;
+using Polly;
+using Polly.Extensions.Http;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddControllers();
+builder.Services.AddOpenApi();
+
+builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
+
+builder.Services.AddGrpcClient<Inventory.InventoryClient>(o =>
+{
+    o.Address = new Uri(builder.Configuration["Services:InventoryGrpc"]);
+});
+
+builder.Services.AddScoped<InventoryGrpcAdapter>();
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 
 var app = builder.Build();
 

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "qB8o1JjPLKA=",
+  "success": true,
+  "projectFilePath": "D:\\Programas\\Repositorios\\censudex-api-gateway\\censudex-api\\censudex-api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\piti2\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.10\\microsoft.aspnetcore.openapi.9.0.10.nupkg.sha512",
+    "C:\\Users\\piti2\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -13,7 +13,7 @@ builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 
 builder.Services.AddGrpcClient<Inventory.InventoryClient>(o =>
 {
-    o.Address = new Uri(builder.Configuration["Services:InventoryGrpc"]);
+    o.Address = new Uri(builder.Configuration["Services:GrpcBalancer"]);
 });
 
 builder.Services.AddScoped<InventoryGrpcAdapter>();

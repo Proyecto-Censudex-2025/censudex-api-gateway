@@ -50,17 +50,29 @@ namespace censudex_api.src.Controllers
         {
             // SOLO PARA PROBAR
             var meta = new Metadata();
-            //var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
-            var userId = "9460efa6-ae09-4089-bed1-321976f6911e";
-            //var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "client";
-            var userRole = "client";
-            //var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value ?? "";
-            var userEmail = "byron.letelier@alumnos.ucn.cl";
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
+            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "client";
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value ?? "";
+
+            //Cambio de rol "User" a "client" para el servicio de órdenes
+            string nestedUserRole;
+            if (userRole == "User")
+            {
+                nestedUserRole = "client"; 
+            }
+            else if (userRole == "Admin")
+            {
+                nestedUserRole = "admin";
+            }
+            else
+            {
+                nestedUserRole = userRole; 
+            }
+
             meta.Add("x-user-id", userId);
-            meta.Add("x-user-role", userRole);
+            meta.Add("x-user-role", nestedUserRole);
             meta.Add("x-user-email", userEmail);
-            
-            
+
             var authHeader = HttpContext.Request.Headers.ContainsKey("Authorization")
                 ? HttpContext.Request.Headers["Authorization"].ToString()
                 : string.Empty;
@@ -83,7 +95,7 @@ namespace censudex_api.src.Controllers
         /// <response code="500">Error interno del servidor.</response>
         /// <response code="GrpcException">Error gRPC específico.</response>
         [HttpPost]
-        //[Authorize]
+        [Authorize(Policy = "ClientOrAbove")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderHttpDto dto) 
         {
             try
@@ -129,7 +141,7 @@ namespace censudex_api.src.Controllers
         /// <param name="dto">Parámetros para filtrar y paginar las órdenes.</param>
         /// <returns>Lista de órdenes que cumplen con los criterios.</returns>
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<IActionResult> GetOrders([FromQuery] QueryOrderRequest dto)
         {
             try

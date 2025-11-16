@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+option csharp_namespace = "ClientsService.Grcp";
+
+package client;
+
+// Client Service Definition
+service ClientService {
+  rpc GetAllClients (GetAllClientsRequest) returns (GetAllClientsResponse);
+  rpc GetClient (GetClientRequest) returns (GetClientResponse);
+  rpc GetClientsFiltered (GetClientsFilteredRequest) returns (GetClientsFilteredResponse);
+  rpc EnableDisableClient (EnableDisableClientRequest) returns (EnableDisableClientResponse);
+  rpc UpdateClient (UpdateClientRequest) returns (UpdateClientResponse);
+  rpc RegisterClient (RegisterClientRequest) returns (RegisterClientResponse);
+}
+
+// Messages
+message GetAllClientsRequest {}
+
+message GetAllClientsResponse {
+  repeated ClientDto clients = 1;
+}
+
+message GetClientRequest {
+  string id = 1;
+}
+
+message GetClientResponse {
+  ClientDto client = 1;
+  bool found = 2;
+}
+
+message GetClientsFilteredRequest {
+  string name = 1;
+  string email = 2;
+  optional bool is_active = 3;
+  string username = 4;
+}
+
+message GetClientsFilteredResponse {
+  repeated ClientDto clients = 1;
+}
+
+message EnableDisableClientRequest {
+  string id = 1;
+}
+
+message EnableDisableClientResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message UpdateClientRequest {
+  string name = 1;
+  string surename = 2;
+  string email = 3;
+  string username = 4;
+  string birthdate = 5;
+  string address = 6;
+  string telephone_number = 7;
+  string password = 8;
+  string token = 9; // JWT token for authentication
+}
+
+message UpdateClientResponse {
+  ClientDto client = 1;
+  bool success = 2;
+  string message = 3;
+}
+
+message RegisterClientRequest {
+  string name = 1;
+  string surename = 2;
+  string email = 3;
+  string username = 4;
+  string birthdate = 5;
+  string address = 6;
+  string telephone_number = 7;
+  string password = 8;
+}
+
+message RegisterClientResponse {
+  ClientDto client = 1;
+  bool success = 2;
+  string message = 3;
+}
+
+message ClientDto {
+  string id = 1;
+  string fullname = 2;
+  string email = 3;
+  string username = 4;
+  bool is_active = 5;
+  string birthdate = 6;
+  string address = 7;
+  string telephone_number = 8;
+  string registration_date = 9;
+}

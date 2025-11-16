@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace censudex_api.src.Controllers
@@ -31,6 +32,7 @@ namespace censudex_api.src.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetInventory()
         {
             var response = await _inventoryGrpcAdapter.GetInventory(new Google.Protobuf.WellKnownTypes.Empty());
@@ -42,6 +44,7 @@ namespace censudex_api.src.Controllers
         /// <param name="product">Producto a agregar.</param>
         /// <returns>Producto agregado.</returns>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddProduct([FromBody] InventoryService.Grpc.ProductMessage product)
         {
             var response = await _inventoryGrpcAdapter.AddProductAsync(product);

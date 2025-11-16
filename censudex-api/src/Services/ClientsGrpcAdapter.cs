@@ -15,7 +15,7 @@ namespace censudex_api.src.Services
 
         public ClientsGrpcAdapter(IConfiguration configuration, ILogger<ClientsGrpcAdapter> logger)
         {
-            _grpcAddress = configuration["GrpcServices:ClientsService"] ?? "http://localhost:5253";
+            _grpcAddress = configuration["GrpcServices:ClientsService"] ?? "http://localhost:50053";
             _logger = logger;
         }
 

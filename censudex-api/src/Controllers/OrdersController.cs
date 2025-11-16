@@ -50,30 +50,49 @@ namespace censudex_api.src.Controllers
         {
             // SOLO PARA PROBAR
             var meta = new Metadata();
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
-            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "client";
-            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value ?? "";
+            var userId = User?.Claims.FirstOrDefault(c => 
+                c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
+
+            var userRole = User?.Claims.FirstOrDefault(c => 
+                c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+
+            var userEmail = User?.Claims.FirstOrDefault(c => 
+                c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
 
             //Cambio de rol "User" a "client" para el servicio de órdenes
-            string nestedUserRole;
-            if (userRole == "User")
+            string nestedUserRole = null;
+            if (!string.IsNullOrWhiteSpace(userRole))
             {
-                nestedUserRole = "client"; 
-            }
-            else if (userRole == "Admin")
-            {
-                nestedUserRole = "admin";
-            }
-            else
-            {
-                nestedUserRole = userRole; 
+                if (userRole == "User")
+                {
+                    nestedUserRole = "client";
+                }
+                else if (userRole == "Admin")
+                {
+                    nestedUserRole = "admin";
+                }
+                else
+                {
+                    nestedUserRole = userRole;
+                }
             }
 
-            meta.Add("x-user-id", userId);
-            meta.Add("x-user-role", nestedUserRole);
-            meta.Add("x-user-email", userEmail);
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                meta.Add("x-user-id", userId);
+            }
 
-            var authHeader = HttpContext.Request.Headers.ContainsKey("Authorization")
+            if (!string.IsNullOrWhiteSpace(nestedUserRole))
+            {
+                meta.Add("x-user-role", nestedUserRole);
+            }
+
+            if (!string.IsNullOrWhiteSpace(userEmail))
+            {
+                meta.Add("x-user-email", userEmail);
+            }
+
+            var authHeader = HttpContext?.Request?.Headers.ContainsKey("Authorization") == true
                 ? HttpContext.Request.Headers["Authorization"].ToString()
                 : string.Empty;
             

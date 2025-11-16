@@ -21,5 +21,6 @@
   <ItemGroup>
     <Protobuf Include="src/Protos/inventory.proto" GrpcServices="Client" />
     <Protobuf Include="src/Protos/products.proto" GrpcServices="Client" />
+    <Protobuf Include="src/Protos/order.proto" GrpcServices="Client" />
   </ItemGroup>
 </Project>

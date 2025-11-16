@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Google.Protobuf;
 
 namespace censudex_api.src.Controllers
 {
@@ -62,11 +65,23 @@ namespace censudex_api.src.Controllers
         [HttpPost]
         [HttpPost("create")]
         [HttpPost("/products/create")]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Create([FromBody] CreateProductRequest dto)
+        [Authorize(Roles = "Admin")]
+public async Task<IActionResult> Create([FromForm] CreateProductRequest dto, IFormFile image)
         {
             try
             {
+                // 1. Manejo del Archivo (Conversion de IFormFile a byte[])
+                byte[]? imageBuffer = null;
+                if (image != null && image.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        await image.CopyToAsync(ms);
+                        imageBuffer = ms.ToArray();
+                    }
+                }
+
+                // 2. Mapeo a gRPC Request (incluyendo el buffer)
                 var grpcReq = new ProductService.Grpc.CreateProductRequest
                 {
                     Name = dto.Name ?? "",
@@ -75,10 +90,18 @@ namespace censudex_api.src.Controllers
                     Category = dto.Category ?? "",
                 };
 
+                if (imageBuffer != null)
+                {
+                    // Asignar el buffer al campo gRPC (asumiendo que se llama ImageBuffer)
+                    grpcReq.ImageBuffer = ByteString.CopyFrom(imageBuffer);
+                }
+
+                // 3. Llamada al adaptador gRPC con el token de autorización
                 var authHeader = HttpContext.Request.Headers.ContainsKey("Authorization")
                     ? HttpContext.Request.Headers["Authorization"].ToString()
                     : string.Empty;
                 var resp = await _productsGrpcAdapter.CreateProductAsync(grpcReq, authHeader);
+                
                 if (resp == null)
                 {
                     _logger.LogWarning("Create product failed: backend service unavailable or returned no product");
@@ -90,6 +113,7 @@ namespace censudex_api.src.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error creating product");
+                // Si la validación falla (ej: campo no encontrado), ASP.NET Core ya devuelve 400.
                 return StatusCode(500, new { message = "Error creando producto" });
             }
         }
@@ -98,11 +122,22 @@ namespace censudex_api.src.Controllers
         [HttpPut("{id}")]
         [HttpPatch("edit/{id}")]
         [HttpPatch("/products/edit/{id}")]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Update(string id, [FromBody] UpdateProductRequest dto)
+        [Authorize(Roles = "Admin")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update(string id, [FromForm] UpdateProductRequest dto, IFormFile? image)
         {
             try
             {
+                byte[]? imageBuffer = null;
+                if (image != null && image.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        await image.CopyToAsync(ms);
+                        imageBuffer = ms.ToArray();
+                    }
+                }
+
                 var grpcReq = new ProductService.Grpc.UpdateProductRequest
                 {
                     Id = id,
@@ -110,8 +145,12 @@ namespace censudex_api.src.Controllers
                     Description = dto.Description ?? "",
                     Price = dto.Price ?? 0,
                     Category = dto.Category ?? "",
-                    // backend UpdateProductRequest doesn't include image fields
                 };
+
+                if (imageBuffer != null)
+                {
+                    grpcReq.ImageBuffer = ByteString.CopyFrom(imageBuffer);
+                }
 
                 var authHeader = HttpContext.Request.Headers.ContainsKey("Authorization")
                     ? HttpContext.Request.Headers["Authorization"].ToString()
@@ -131,7 +170,7 @@ namespace censudex_api.src.Controllers
         [HttpDelete("{id}")]
         [HttpDelete("delete/{id}")]
         [HttpDelete("/products/delete/{id}")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             try
@@ -157,8 +196,6 @@ namespace censudex_api.src.Controllers
         public string Description { get; set; }
         public double Price { get; set; }
         public string Category { get; set; }
-        public string ImageUrl { get; set; }
-        public string ImagePublicId { get; set; }
     }
 
     public class UpdateProductRequest
@@ -167,7 +204,5 @@ namespace censudex_api.src.Controllers
         public string Description { get; set; }
         public double? Price { get; set; }
         public string Category { get; set; }
-        public string ImageUrl { get; set; }
-        public string ImagePublicId { get; set; }
     }
 }

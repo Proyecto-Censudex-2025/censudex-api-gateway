@@ -38,6 +38,7 @@ message CreateProductRequest {
   string description = 2;
   double price = 3;
   string category = 4;
+  optional bytes imageBuffer=5;
 }
 
 message UpdateProductRequest {
@@ -46,6 +47,7 @@ message UpdateProductRequest {
   optional string description = 3;
   optional double price = 4;
   optional string category = 5;
+  optional bytes imageBuffer= 6;
 }
 
 message DeleteProductRequest {

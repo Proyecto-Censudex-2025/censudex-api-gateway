@@ -1,5 +1,6 @@
 using censudex_api.src.Services;
 using InventoryService.Grpc;
+using ProductService.Grpc;
 using Polly;
 using Polly.Extensions.Http;
 using Serilog;
@@ -16,7 +17,15 @@ builder.Services.AddGrpcClient<Inventory.InventoryClient>(o =>
     o.Address = new Uri(builder.Configuration["Services:GrpcBalancer"]);
 });
 
+
+builder.Services.AddGrpcClient<ProductsService.ProductsServiceClient>(o =>
+{
+    o.Address = new Uri(builder.Configuration["Services:GrpcBalancer"]);
+});
+
+
 builder.Services.AddScoped<InventoryGrpcAdapter>();
+builder.Services.AddScoped<ProductsGrpcAdapter>();
 
 builder.Services.AddControllers();
 

@@ -118,6 +118,6 @@ El API Gateway se conecta a los microservicios siguiendo la arquitectura definid
 ### Integrantes del Equipo
 
 - Byron Syd Letelier Muriel - 19.968.262-8
-- Nicolas Andres Diaz Juica - 20.949.349-7
+- Nicolas Andrés Diaz Juica - 20.949.349-7
 - Ignacio Javier Carvajal Canelo - 21.411.819.K
 - Fernando Javier Quetzal Vega Flores  - 21.061.249-1

@@ -8,6 +8,7 @@ using OrdersService.Grpc;
 using Grpc.Core;
 using System.Linq;
 using System.Security.Claims;
+using censudex_api.src.Dto;
 
 /// <summary>
 /// Controlador de órdenes.
@@ -47,17 +48,51 @@ namespace censudex_api.src.Controllers
         /// <returns>Metadata con información del usuario.</returns>
         private Metadata GetUserMetadata()
         {
+            // SOLO PARA PROBAR
             var meta = new Metadata();
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
-            var userRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value ?? "client";
-            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value ?? "";
+            var userId = User?.Claims.FirstOrDefault(c => 
+                c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
 
-            meta.Add("x-user-id", userId);
-            meta.Add("x-user-role", userRole);
-            meta.Add("x-user-email", userEmail);
-            
-            
-            var authHeader = HttpContext.Request.Headers.ContainsKey("Authorization")
+            var userRole = User?.Claims.FirstOrDefault(c => 
+                c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+
+            var userEmail = User?.Claims.FirstOrDefault(c => 
+                c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+
+            //Cambio de rol "User" a "client" para el servicio de órdenes
+            string nestedUserRole = null;
+            if (!string.IsNullOrWhiteSpace(userRole))
+            {
+                if (userRole == "User")
+                {
+                    nestedUserRole = "client";
+                }
+                else if (userRole == "Admin")
+                {
+                    nestedUserRole = "admin";
+                }
+                else
+                {
+                    nestedUserRole = userRole;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                meta.Add("x-user-id", userId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(nestedUserRole))
+            {
+                meta.Add("x-user-role", nestedUserRole);
+            }
+
+            if (!string.IsNullOrWhiteSpace(userEmail))
+            {
+                meta.Add("x-user-email", userEmail);
+            }
+
+            var authHeader = HttpContext?.Request?.Headers.ContainsKey("Authorization") == true
                 ? HttpContext.Request.Headers["Authorization"].ToString()
                 : string.Empty;
             
@@ -79,13 +114,32 @@ namespace censudex_api.src.Controllers
         /// <response code="500">Error interno del servidor.</response>
         /// <response code="GrpcException">Error gRPC específico.</response>
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderRequest dto)
+        [Authorize(Policy = "ClientOrAbove")]
+        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderHttpDto dto) 
         {
             try
             {
                 var meta = GetUserMetadata();
-                var resp = await _ordersAdapter.CreateOrderAsync(dto, meta);
+
+                var grpcRequest = new OrdersService.Grpc.CreateOrderRequest
+                {
+                    ClientId = dto.ClientId,
+                    ClientEmail = dto.ClientEmail,
+                    ClientName = dto.ClientName,
+                    ShippingAddress = dto.ShippingAddress
+                };
+
+                
+                foreach (var itemDto in dto.Items)
+                {
+                    grpcRequest.Items.Add(new OrdersService.Grpc.CreateOrderItemRequest
+                    {
+                        ProductId = itemDto.ProductId,
+                        Quantity = itemDto.Quantity
+                    });
+                }
+                
+                var resp = await _ordersAdapter.CreateOrderAsync(grpcRequest, meta); 
                 return CreatedAtAction(nameof(GetOrderById), new { id = resp.Id }, resp);
             }
             catch (RpcException ex)

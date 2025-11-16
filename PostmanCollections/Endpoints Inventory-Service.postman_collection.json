@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "4caf9584-c278-4911-b78d-4d16bebf159b",
+		"name": "Endpoints Inventory-Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35122636"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"Admin@censudex.cl\",\r\n    \"password\": \"Password123+\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5114/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5114",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetInventory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/Inventory",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Inventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Silla Ergonómica Censudex\",\r\n    \"category\": \"Muebles\",\r\n    \"stock\": 120,\r\n    \"is_active\": true,\r\n    \"minimum_stock\": 20,\r\n    \"id\": \"26e5acc8-1fb7-4ddd-b175-f0e95f723781\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/Inventory",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Inventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getInventoryId",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/Inventory/26e5acc8-1fb7-4ddd-b175-f0e95f723781",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Inventory",
+						"26e5acc8-1fb7-4ddd-b175-f0e95f723781"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateStock",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "5",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/Inventory/26e5acc8-1fb7-4ddd-b175-f0e95f723781/stock",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Inventory",
+						"26e5acc8-1fb7-4ddd-b175-f0e95f723781",
+						"stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateMinimumStock",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "10",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/Inventory/26e5acc8-1fb7-4ddd-b175-f0e95f723781/minimum-stock",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"Inventory",
+						"26e5acc8-1fb7-4ddd-b175-f0e95f723781",
+						"minimum-stock"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImM3ZjE3ZDdhLTFhMDYtNGI2Yi05ZjlhLTU0YmYxODU2NWYyZiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6IkFkbWluQGNlbnN1ZGV4LmNsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJOb21icmVfQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQXBlbGxpZG9fQWRtaW4iLCJVc2VybmFtZSI6IkFkbWluVXNlcm5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9kYXRlb2ZiaXJ0aCI6IjE2LzExLzIwMDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdHJlZXRhZGRyZXNzIjoiQSB2ZXJ5IHJlYWwgYWRkcmVzcyAxMjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6Iis1NjkxMTExMTExMSIsImZ1bGxOYW1lIjoiTm9tYnJlX0FkbWluIEFwZWxsaWRvX0FkbWluIiwicmVnaXN0cmF0aW9uRGF0ZSI6IjIwMjUtMTEtMTYiLCJqdGkiOiI2ZGVmYWQ2ZS1hZmU0LTRhYTQtODlmNi1jNGViNWM1MGVhZTMiLCJpYXQiOjE3NjMzMzM2MjAsImV4cCI6MTc2MzMzNzIyMCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MTExIiwiYXVkIjoiY2Vuc3VkZXhBcHAifQ.I7Bs4-17Bx9lYXx9sfp7efFUolufVVw27zSu5-eru34",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": ""
+		}
+	]
+}

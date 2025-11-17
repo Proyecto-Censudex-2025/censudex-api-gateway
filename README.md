@@ -45,8 +45,9 @@ Los siguientes endpoints son expuestos por el API Gateway (la aplicación C# en 
 | `GET` | `/clients` | Clients Service | Visualizar listado de usuarios. |
 | `GET` | `/clients/{id}` | Clients Service | Obtener usuario por ID. |
 | `PATCH` | `/clients/{id}` | Clients Service | Editar datos de usuario/Actualizar contraseña. |
+| `DELETE` | `/clients/{id}` | Clients Service | Sofy delete de un cliente. |
 | `POST` | `/products` | Products Service | Crear producto (Administrador). |
-| `GET` | `/products` | Products Service | Visualizar listado de productos]. |
+| `GET` | `/products` | Products Service | Visualizar listado de productos. |
 | `GET` | `/products/{id}` | Products Service | Obtener producto por ID. |
 | `PATCH` | `/products/{id}` | Products Service | Editar datos de producto/Eliminar producto (Soft Delete). |
 | `GET` | `/inventory` | Inventory Service | Consultar listado de stock de productos. |
@@ -55,7 +56,7 @@ Los siguientes endpoints son expuestos por el API Gateway (la aplicación C# en 
 | `PATCH` | `/inventory/{productId}/stock` | Inventory Service | **Ajustar la cantidad de stock** (Entradas/Salidas). |
 | `PATCH` | `/inventory/{productId}/minimum-stock` | Inventory Service | **Configurar umbral mínimo** de stock. |
 | `POST` | `/orders` | Orders Service | Creación de nuevos pedidos. |
-| `GET` | `/orders` | Orders Service | Ver historial de pedidos]. |
+| `GET` | `/orders` | Orders Service | Ver historial de pedidos. |
 | `GET` | `/orders/{id}` | Orders Service | Consultar estado de pedido. |
 | `PUT` | `/orders/{id}/status` | Orders Service | Actualizar estado de pedido. |
 | `PATCH` | `/orders/{id}` | Orders Service | Cancelar pedido (o similar). |

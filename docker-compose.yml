@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+
+  nginx:
+    image: nginx:latest
+    container_name: censudex-nginx-lb
+    ports:
+      - "7000:7000"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - censudex-net
+
+networks:
+  censudex-net:
+    driver: bridge

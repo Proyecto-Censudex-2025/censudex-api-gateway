@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+option csharp_namespace = "InventoryService.Grpc";
+
+import "google/protobuf/empty.proto";
+
+package Inventory;
+
+// Servicio de inventario encargado de manejar la gestión de stock y umbrales mínimos
+// Para todos los productos de Censudex
+service Inventory {
+
+  // Agrega un nuevo producto al sistema de inventario.
+  // Esta RPC retorna el producto completo, incluyendo el ID asignado.  
+  rpc AddProduct (AddProductRequest) returns (AddProductResponse);
+
+  // Consulta la lista completa de productos registrados y su stock.
+  rpc GetAllProducts (google.protobuf.Empty) returns (GetAllProductsResponse);
+  
+  // Consulta el stock y los detalles del inventario de un producto específico.
+  rpc GetProductById (GetProductByIdRequest) returns (GetProductByIdResponse);
+  
+  // Actualiza el stock de un producto para entradas o salidas.
+  // Publica eventos 'stock.low' si el stock cae por debajo del umbral.
+  rpc UpdateStock (UpdateStockRequest) returns (UpdateStockResponse);
+  
+  // Establece el umbral mínimo de stock para el sistema de alertas.
+  rpc SetMinimumStock (SetMinimumStockRequest) returns (SetMinimumStockResponse);
+}
+
+// Mensaje de datos que representa la información completa de un producto en inventario.
+message ProductMessage {
+    string id = 1; 
+    string name = 2;
+    string category = 3;
+    int32 stock = 4;
+    bool is_active = 5;
+    int32 minimum_stock = 6;
+}
+
+// Mensaje de visualización simplificado para consultas de solo lectura.
+message ProductVisualizerMessage {
+    string name = 1;
+    int32 stock = 2;
+    int32 minimum_stock = 3;
+    bool is_active = 4;
+}
+
+// Solicitud para crear un nuevo producto.
+message AddProductRequest {
+    ProductMessage product = 1;
+}
+
+// Respuesta al agregar un producto.
+message AddProductResponse {
+    ProductMessage product = 1;
+    string message = 2;
+}
+
+// Respuesta que contiene el listado completo de productos.
+message GetAllProductsResponse {
+    repeated ProductMessage products = 1;
+}
+
+// Solicitud para buscar un producto por su identificador.
+message GetProductByIdRequest {
+    string product_id = 1;
+}
+
+// Respuesta con la información simplificada de un producto.
+message GetProductByIdResponse {
+    ProductVisualizerMessage product = 1;
+}
+
+// Solicitud para actualizar el stock de un producto.
+message UpdateStockRequest {
+    string product_id = 1;
+    int32 amount = 2;
+}
+
+// Respuesta después de una actualización exitosa de stock.
+message UpdateStockResponse {
+    ProductVisualizerMessage product = 1;
+    string message = 2;
+}
+
+// Solicitud para configurar el umbral mínimo de stock.
+message SetMinimumStockRequest {
+    string product_id = 1;
+    int32 minimum_stock = 2;
+}
+
+// Respuesta después de establecer el umbral mínimo de stock.
+message SetMinimumStockResponse {
+    ProductVisualizerMessage product = 1;
+    string message = 2;
+}

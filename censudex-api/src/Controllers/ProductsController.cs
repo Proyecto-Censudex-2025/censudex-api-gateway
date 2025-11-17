@@ -67,56 +67,66 @@ namespace censudex_api.src.Controllers
         [HttpPost("/products/create")]
         [Authorize(Roles = "Admin")]
 public async Task<IActionResult> Create([FromForm] CreateProductRequest dto, IFormFile image)
+{
+    try
+    {
+        byte[]? imageBuffer = null;
+        if (image != null && image.Length > 0)
         {
-            try
+            using (var ms = new MemoryStream())
             {
-                // 1. Manejo del Archivo (Conversion de IFormFile a byte[])
-                byte[]? imageBuffer = null;
-                if (image != null && image.Length > 0)
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        await image.CopyToAsync(ms);
-                        imageBuffer = ms.ToArray();
-                    }
-                }
-
-                // 2. Mapeo a gRPC Request (incluyendo el buffer)
-                var grpcReq = new ProductService.Grpc.CreateProductRequest
-                {
-                    Name = dto.Name ?? "",
-                    Description = dto.Description ?? "",
-                    Price = dto.Price,
-                    Category = dto.Category ?? "",
-                };
-
-                if (imageBuffer != null)
-                {
-                    // Asignar el buffer al campo gRPC (asumiendo que se llama ImageBuffer)
-                    grpcReq.ImageBuffer = ByteString.CopyFrom(imageBuffer);
-                }
-
-                // 3. Llamada al adaptador gRPC con el token de autorización
-                var authHeader = HttpContext.Request.Headers.ContainsKey("Authorization")
-                    ? HttpContext.Request.Headers["Authorization"].ToString()
-                    : string.Empty;
-                var resp = await _productsGrpcAdapter.CreateProductAsync(grpcReq, authHeader);
-                
-                if (resp == null)
-                {
-                    _logger.LogWarning("Create product failed: backend service unavailable or returned no product");
-                    return StatusCode(500, new { message = "Error creando producto (servicio no disponible)" });
-                }
-
-                return CreatedAtAction(nameof(GetById), new { id = resp.Id }, resp);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error creating product");
-                // Si la validación falla (ej: campo no encontrado), ASP.NET Core ya devuelve 400.
-                return StatusCode(500, new { message = "Error creando producto" });
+                await image.CopyToAsync(ms);
+                imageBuffer = ms.ToArray();
             }
         }
+
+
+        var grpcReq = new ProductService.Grpc.CreateProductRequest
+        {
+            Name = dto.Name ?? "",
+            Description = dto.Description ?? "",
+            Price = dto.Price,
+            Category = dto.Category ?? "",
+        };
+
+        if (imageBuffer != null)
+        {
+            grpcReq.ImageBuffer = ByteString.CopyFrom(imageBuffer);
+        }
+
+        var authHeader = HttpContext.Request.Headers.ContainsKey("Authorization")
+            ? HttpContext.Request.Headers["Authorization"].ToString()
+            : string.Empty;
+        var resp = await _productsGrpcAdapter.CreateProductAsync(grpcReq, authHeader);
+        
+        if (resp == null)
+        {
+            _logger.LogWarning("Create product failed: backend service unavailable or returned no product");
+            return StatusCode(500, new { message = "Error creando producto (servicio no disponible)" });
+        }
+
+
+        var productDto = new ProductDto
+        {
+            Id = resp.Id,
+            Name = resp.Name,
+            Description = resp.Description,
+            Price = resp.Price,
+            Category = resp.Category,
+            ImageUrl = resp.ImageUrl, 
+            IsActive = resp.IsActive,
+            CreatedAt = resp.CreatedAt,
+            UpdatedAt = resp.UpdatedAt
+        };
+
+        return CreatedAtAction(nameof(GetById), new { id = resp.Id }, productDto);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Error creating product");
+        return StatusCode(500, new { message = "Error creando producto" });
+    }
+}
 
         // PUT /api/products/{id} (admin)
         [HttpPut("{id}")]

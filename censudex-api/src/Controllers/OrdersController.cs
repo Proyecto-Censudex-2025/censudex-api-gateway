@@ -216,7 +216,7 @@ namespace censudex_api.src.Controllers
         /// <param name="dto">Datos para actualizar el estado de la orden.</param>
         /// <returns>Resultado de la actualización del estado.</returns>
         [HttpPut("{id}/status")]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateStatus(string id, [FromBody] UpdateOrderStatusRequest dto)
         {
             try

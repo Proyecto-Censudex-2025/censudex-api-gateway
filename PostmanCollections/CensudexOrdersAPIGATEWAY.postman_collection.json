@@ -1,0 +1,300 @@
+{
+	"info": {
+		"_postman_id": "319f6bf0-401f-4c83-a894-aeda7c8e67e8",
+		"name": "Censudex Orders APIGATEWAY",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35088823",
+		"_collection_link": "https://ww4444-5530.postman.co/workspace/Arqui~001470f1-c5c2-4292-b156-4e00e52b71d7/collection/35088823-319f6bf0-401f-4c83-a894-aeda7c8e67e8?action=share&source=collection_link&creator=35088823"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "BearereyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Ijk5ZmM0NjdlLWUwNDktNDM1YS04OWRiLThjZDkyNGEyNzBiMyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6IkFkbWluQGNlbnN1ZGV4LmNsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJOb21icmVfQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQXBlbGxpZG9fQWRtaW4iLCJVc2VybmFtZSI6IkFkbWluVXNlcm5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9kYXRlb2ZiaXJ0aCI6IjE2LTExLTIwMDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdHJlZXRhZGRyZXNzIjoiQSB2ZXJ5IHJlYWwgYWRkcmVzcyAxMjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6Iis1NjkxMTExMTExMSIsImZ1bGxOYW1lIjoiTm9tYnJlX0FkbWluIEFwZWxsaWRvX0FkbWluIiwicmVnaXN0cmF0aW9uRGF0ZSI6IjIwMjUtMTEtMTYiLCJqdGkiOiJlODJiZjE5NC03ZGEwLTRjOGQtOGY0Mi0yZTY1YjE5MTI1NDgiLCJpYXQiOjE3NjMzMjM2ODIsImV4cCI6MTc2MzMyNzI4MiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MTExIiwiYXVkIjoiY2Vuc3VkZXhBcHAifQ.Gb1hA5Gxq5QQGf-f9AVvXYLPEUuMgH_BVFuuIN33LT0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"Admin@censudex.cl\",\r\n  \"password\": \"Password123+\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewOrders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Ijk5ZmM0NjdlLWUwNDktNDM1YS04OWRiLThjZDkyNGEyNzBiMyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6IkFkbWluQGNlbnN1ZGV4LmNsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJOb21icmVfQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQXBlbGxpZG9fQWRtaW4iLCJVc2VybmFtZSI6IkFkbWluVXNlcm5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9kYXRlb2ZiaXJ0aCI6IjE2LTExLTIwMDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdHJlZXRhZGRyZXNzIjoiQSB2ZXJ5IHJlYWwgYWRkcmVzcyAxMjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6Iis1NjkxMTExMTExMSIsImZ1bGxOYW1lIjoiTm9tYnJlX0FkbWluIEFwZWxsaWRvX0FkbWluIiwicmVnaXN0cmF0aW9uRGF0ZSI6IjIwMjUtMTEtMTYiLCJqdGkiOiI1MGZjMDc0ZC04MmM0LTQyNzgtOTExYy1hNjA2Yjk3ZTZhZWQiLCJpYXQiOjE3NjMzMzYwMjksImV4cCI6MTc2MzMzOTYyOSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MTExIiwiYXVkIjoiY2Vuc3VkZXhBcHAifQ.ho3dNShkXoKtVxIrsfmBmOL1X6ngS4QChytk-xL5YDc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/orders",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewOrderswithParameters",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Ijk5ZmM0NjdlLWUwNDktNDM1YS04OWRiLThjZDkyNGEyNzBiMyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6IkFkbWluQGNlbnN1ZGV4LmNsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJOb21icmVfQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQXBlbGxpZG9fQWRtaW4iLCJVc2VybmFtZSI6IkFkbWluVXNlcm5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9kYXRlb2ZiaXJ0aCI6IjE2LTExLTIwMDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdHJlZXRhZGRyZXNzIjoiQSB2ZXJ5IHJlYWwgYWRkcmVzcyAxMjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6Iis1NjkxMTExMTExMSIsImZ1bGxOYW1lIjoiTm9tYnJlX0FkbWluIEFwZWxsaWRvX0FkbWluIiwicmVnaXN0cmF0aW9uRGF0ZSI6IjIwMjUtMTEtMTYiLCJqdGkiOiI1MGZjMDc0ZC04MmM0LTQyNzgtOTExYy1hNjA2Yjk3ZTZhZWQiLCJpYXQiOjE3NjMzMzYwMjksImV4cCI6MTc2MzMzOTYyOSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MTExIiwiYXVkIjoiY2Vuc3VkZXhBcHAifQ.ho3dNShkXoKtVxIrsfmBmOL1X6ngS4QChytk-xL5YDc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/orders?startDate=2025-11-01&endDate=2025-11-14",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"orders"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2025-11-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2025-11-14"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewAOrder",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Ijk5ZmM0NjdlLWUwNDktNDM1YS04OWRiLThjZDkyNGEyNzBiMyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6IkFkbWluQGNlbnN1ZGV4LmNsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJOb21icmVfQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQXBlbGxpZG9fQWRtaW4iLCJVc2VybmFtZSI6IkFkbWluVXNlcm5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9kYXRlb2ZiaXJ0aCI6IjE2LTExLTIwMDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdHJlZXRhZGRyZXNzIjoiQSB2ZXJ5IHJlYWwgYWRkcmVzcyAxMjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6Iis1NjkxMTExMTExMSIsImZ1bGxOYW1lIjoiTm9tYnJlX0FkbWluIEFwZWxsaWRvX0FkbWluIiwicmVnaXN0cmF0aW9uRGF0ZSI6IjIwMjUtMTEtMTYiLCJqdGkiOiI1MGZjMDc0ZC04MmM0LTQyNzgtOTExYy1hNjA2Yjk3ZTZhZWQiLCJpYXQiOjE3NjMzMzYwMjksImV4cCI6MTc2MzMzOTYyOSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MTExIiwiYXVkIjoiY2Vuc3VkZXhBcHAifQ.ho3dNShkXoKtVxIrsfmBmOL1X6ngS4QChytk-xL5YDc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/orders/{{id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"orders",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChangeStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Ijk5ZmM0NjdlLWUwNDktNDM1YS04OWRiLThjZDkyNGEyNzBiMyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6IkFkbWluQGNlbnN1ZGV4LmNsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJOb21icmVfQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQXBlbGxpZG9fQWRtaW4iLCJVc2VybmFtZSI6IkFkbWluVXNlcm5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9kYXRlb2ZiaXJ0aCI6IjE2LTExLTIwMDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdHJlZXRhZGRyZXNzIjoiQSB2ZXJ5IHJlYWwgYWRkcmVzcyAxMjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6Iis1NjkxMTExMTExMSIsImZ1bGxOYW1lIjoiTm9tYnJlX0FkbWluIEFwZWxsaWRvX0FkbWluIiwicmVnaXN0cmF0aW9uRGF0ZSI6IjIwMjUtMTEtMTYiLCJqdGkiOiI1MGZjMDc0ZC04MmM0LTQyNzgtOTExYy1hNjA2Yjk3ZTZhZWQiLCJpYXQiOjE3NjMzMzYwMjksImV4cCI6MTc2MzMzOTYyOSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MTExIiwiYXVkIjoiY2Vuc3VkZXhBcHAifQ.ho3dNShkXoKtVxIrsfmBmOL1X6ngS4QChytk-xL5YDc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"en_procesamiento\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/orders/{{id}}/status",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"orders",
+						"{{id}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "viewHistoryClient",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Ijk5ZmM0NjdlLWUwNDktNDM1YS04OWRiLThjZDkyNGEyNzBiMyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6IkFkbWluQGNlbnN1ZGV4LmNsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJOb21icmVfQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQXBlbGxpZG9fQWRtaW4iLCJVc2VybmFtZSI6IkFkbWluVXNlcm5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9kYXRlb2ZiaXJ0aCI6IjE2LTExLTIwMDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdHJlZXRhZGRyZXNzIjoiQSB2ZXJ5IHJlYWwgYWRkcmVzcyAxMjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6Iis1NjkxMTExMTExMSIsImZ1bGxOYW1lIjoiTm9tYnJlX0FkbWluIEFwZWxsaWRvX0FkbWluIiwicmVnaXN0cmF0aW9uRGF0ZSI6IjIwMjUtMTEtMTYiLCJqdGkiOiI1MGZjMDc0ZC04MmM0LTQyNzgtOTExYy1hNjA2Yjk3ZTZhZWQiLCJpYXQiOjE3NjMzMzYwMjksImV4cCI6MTc2MzMzOTYyOSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MTExIiwiYXVkIjoiY2Vuc3VkZXhBcHAifQ.ho3dNShkXoKtVxIrsfmBmOL1X6ngS4QChytk-xL5YDc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"en_procesamiento\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/orders/history/{{ID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"orders",
+						"history",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelAOrder",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Ijk5ZmM0NjdlLWUwNDktNDM1YS04OWRiLThjZDkyNGEyNzBiMyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6IkFkbWluQGNlbnN1ZGV4LmNsIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJOb21icmVfQWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQXBlbGxpZG9fQWRtaW4iLCJVc2VybmFtZSI6IkFkbWluVXNlcm5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9kYXRlb2ZiaXJ0aCI6IjE2LTExLTIwMDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdHJlZXRhZGRyZXNzIjoiQSB2ZXJ5IHJlYWwgYWRkcmVzcyAxMjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6Iis1NjkxMTExMTExMSIsImZ1bGxOYW1lIjoiTm9tYnJlX0FkbWluIEFwZWxsaWRvX0FkbWluIiwicmVnaXN0cmF0aW9uRGF0ZSI6IjIwMjUtMTEtMTYiLCJqdGkiOiI1MGZjMDc0ZC04MmM0LTQyNzgtOTExYy1hNjA2Yjk3ZTZhZWQiLCJpYXQiOjE3NjMzMzYwMjksImV4cCI6MTc2MzMzOTYyOSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo1MTExIiwiYXVkIjoiY2Vuc3VkZXhBcHAifQ.ho3dNShkXoKtVxIrsfmBmOL1X6ngS4QChytk-xL5YDc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cancellationReason\": \"Prueba desde Postman\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/orders/{{ID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"orders",
+						"{{ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
